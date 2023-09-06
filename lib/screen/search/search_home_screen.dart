@@ -37,7 +37,7 @@ class SearchHomeScreen extends StatelessWidget {
         techName: "calendar_yg_test",
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => HomeScreenCal(),
+            builder: (BuildContext context) => const HomeScreenCal(),
           ));
         },
       ),
@@ -45,7 +45,7 @@ class SearchHomeScreen extends StatelessWidget {
         techName: "TTS",
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => SearchTTS(),
+            builder: (BuildContext context) => const SearchTTS(),
           ));
         },
       ),
@@ -53,7 +53,7 @@ class SearchHomeScreen extends StatelessWidget {
         techName: "MAP",
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => SearchMap(),
+            builder: (BuildContext context) => const SearchMap(),
           ));
         },
       ),
