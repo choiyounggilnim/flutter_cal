@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cal/user_setting.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SettingScreen extends StatefulWidget {
+final testOnOffProvider = StateProvider((ref) => userSetting.testOnOff.get());
+
+class SettingScreen extends HookConsumerWidget {
   const SettingScreen({super.key});
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Setting'),
@@ -19,11 +17,10 @@ class _SettingScreenState extends State<SettingScreen> {
         children: [
           SwitchListTile(
               title: const Text('스위치 테스트'),
-              value: userSetting.testOnOff.get(),
+              value: ref.watch(testOnOffProvider),
               onChanged: (value) {
-                setState(() {
-                  userSetting.testOnOff.set(value);
-                });
+                userSetting.testOnOff.set(value);
+                ref.read(testOnOffProvider.notifier).state = value;
               }),
         ],
       ),
