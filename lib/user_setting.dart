@@ -1,6 +1,11 @@
+import 'package:flutter_cal/global_type/theme_type.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late UserSetting userSetting;
+
+final testOnOffProvider = StateProvider((ref) => userSetting.testOnOff.get());
+final themeTypeProvider = StateProvider((ref) => userSetting.themeType.get());
 
 class UserSetting {
   static UserSetting? _instance;
@@ -14,6 +19,8 @@ class UserSetting {
   }
 
   late UserSettingProperty<bool> testOnOff = UserSettingProperty('testOnOff', false);
+  late UserSettingProperty<ThemeType> themeType = UserSettingProperty('themeType', ThemeType.system,
+      customGetter: (str) => ThemeType.values.byName(str), customSetter: (themeType) => themeType.name);
 
   static dynamic _getFromDisk(String key) {
     var value = _preferences?.get(key);

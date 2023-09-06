@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cal/routes/routes_type.dart';
+import 'package:flutter_cal/global_type/routes_type.dart';
 
 class SearchHomeScreen extends StatelessWidget {
   const SearchHomeScreen({super.key});

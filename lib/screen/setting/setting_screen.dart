@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cal/global_type/theme_type.dart';
+import 'package:flutter_cal/reusable_widget/app_toggle_buttons.dart';
 import 'package:flutter_cal/user_setting.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-final testOnOffProvider = StateProvider((ref) => userSetting.testOnOff.get());
 
 class SettingScreen extends HookConsumerWidget {
   const SettingScreen({super.key});
@@ -22,6 +22,15 @@ class SettingScreen extends HookConsumerWidget {
                 userSetting.testOnOff.set(value);
                 ref.read(testOnOffProvider.notifier).state = value;
               }),
+          AppToggleButtons(
+            initValue: userSetting.themeType.get().displayName,
+            stringValues: ThemeType.values.map((e) => e.displayName).toList(),
+            onPressed: (index) {
+              var selectedThemeType = ThemeType.values[index];
+              userSetting.themeType.set(selectedThemeType);
+              ref.read(themeTypeProvider.notifier).state = selectedThemeType;
+            },
+          ),
         ],
       ),
     );
