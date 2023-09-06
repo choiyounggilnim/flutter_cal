@@ -17,18 +17,16 @@ class SettingScreen extends HookConsumerWidget {
         children: [
           SwitchListTile(
               title: const Text('스위치 테스트'),
-              value: ref.watch(testOnOffProvider),
+              value: userSetting.testOnOff.watch(ref),
               onChanged: (value) {
-                userSetting.testOnOff.set(value);
-                ref.read(testOnOffProvider.notifier).state = value;
+                userSetting.testOnOff.setAndNotify(value, ref);
               }),
           AppToggleButtons(
-            initValue: userSetting.themeType.get().displayName,
+            initValue: userSetting.themeType.watch(ref).displayName,
             stringValues: ThemeType.values.map((e) => e.displayName).toList(),
             onPressed: (index) {
               var selectedThemeType = ThemeType.values[index];
-              userSetting.themeType.set(selectedThemeType);
-              ref.read(themeTypeProvider.notifier).state = selectedThemeType;
+              userSetting.themeType.setAndNotify(selectedThemeType, ref);
             },
           ),
         ],

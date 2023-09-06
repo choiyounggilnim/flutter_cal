@@ -4,9 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 late UserSetting userSetting;
 
-final testOnOffProvider = StateProvider((ref) => userSetting.testOnOff.get());
-final themeTypeProvider = StateProvider((ref) => userSetting.themeType.get());
-
 class UserSetting {
   static UserSetting? _instance;
   static SharedPreferences? _preferences;
@@ -47,12 +44,16 @@ class UserSetting {
 }
 
 class UserSettingProperty<T> {
+  late StateProvider<T> propertyProvider;
+
   final String key;
   T defaultValue;
   T Function(String)? customGetter;
   String Function(T)? customSetter;
 
-  UserSettingProperty(this.key, this.defaultValue, {this.customGetter, this.customSetter});
+  UserSettingProperty(this.key, this.defaultValue, {this.customGetter, this.customSetter}) {
+    propertyProvider = StateProvider<T>((ref) => get());
+  }
 
   bool isWritten() {
     return UserSetting._getFromDisk(key) != null;
@@ -75,11 +76,16 @@ class UserSettingProperty<T> {
     }
   }
 
-  void set(T value) {
+  T watch(WidgetRef ref) {
+    return ref.watch(propertyProvider);
+  }
+
+  void setAndNotify(T value, WidgetRef ref) {
     if (customSetter == null) {
       UserSetting._saveToDisk(key, value);
     } else {
       UserSetting._saveToDisk(key, customSetter!(value));
     }
+    ref.read(propertyProvider.notifier).state = value;
   }
 }
