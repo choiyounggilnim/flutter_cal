@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cal/screen/calendar/home_screen_cal.dart';
-import 'package:flutter_cal/screen/search/search_map.dart';
-import 'package:flutter_cal/screen/search/search_tts.dart';
+import 'package:flutter_cal/routes/routes_type.dart';
 
 class SearchHomeScreen extends StatelessWidget {
   const SearchHomeScreen({super.key});
@@ -14,13 +12,11 @@ class SearchHomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: const Wrap(
+          child: Wrap(
             spacing: 10,
-            children: [
-              RouteButton(title: 'calendar_yg_test', screenWidget: HomeScreenCal()),
-              RouteButton(title: 'TTS', screenWidget: SearchTTS()),
-              RouteButton(title: 'MAP', screenWidget: SearchMap()),
-            ],
+            children: RouteType.values
+                .map((routeType) => RouteButton(title: routeType.techName, screenBuilder: routeType.createPage))
+                .toList(),
           ),
         ),
       ),
@@ -30,17 +26,18 @@ class SearchHomeScreen extends StatelessWidget {
 
 typedef VoidWidgetFunction = Widget Function();
 
+// 정리가 된 것 같지만 파라미터는 어떻게??????
 class RouteButton extends StatelessWidget {
   final String title;
-  final Widget screenWidget;
-  const RouteButton({super.key, required this.title, required this.screenWidget});
+  final VoidWidgetFunction screenBuilder;
+  const RouteButton({super.key, required this.title, required this.screenBuilder});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => screenWidget,
+          builder: (BuildContext context) => screenBuilder(),
         ));
       },
       child: Text(title),
