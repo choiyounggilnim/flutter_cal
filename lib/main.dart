@@ -6,5 +6,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //flutter framwork 가 준비 되었는가.
   await initializeDateFormatting();
 
-  runApp(MaterialApp(home: SearchHomeScreen()));
+  runApp(MaterialApp(
+      theme: ThemeData(useMaterial3: true), darkTheme: ThemeData(useMaterial3: true), home: const SearchHomeScreen()));
 }
