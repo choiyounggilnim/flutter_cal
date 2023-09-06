@@ -2,11 +2,13 @@ import 'package:flutter_cal/screen/calendar/home_screen_cal.dart';
 import 'package:flutter_cal/screen/search/search_home_screen.dart';
 import 'package:flutter_cal/screen/search/search_map.dart';
 import 'package:flutter_cal/screen/search/search_tts.dart';
+import 'package:flutter_cal/screen/setting/setting_screen.dart';
 
 enum RouteType {
   calendar(techName: 'calendar_yg_test'),
   tts(techName: 'TTS'),
-  map(techName: 'MAP');
+  map(techName: 'MAP'),
+  setting(techName: 'Setting');
 
   final String techName;
 
@@ -23,6 +25,8 @@ enum RouteType {
         return () => const SearchTTS();
       case RouteType.map:
         return () => const SearchMap();
+      case RouteType.setting:
+        return () => const SettingScreen();
     }
   }
 }
