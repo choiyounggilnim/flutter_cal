@@ -1,4 +1,5 @@
 import 'package:flutter_cal/screen/calendar/home_screen_cal.dart';
+import 'package:flutter_cal/screen/riverpod_todo/riverpod_todo_screen.dart';
 import 'package:flutter_cal/screen/search/search_home_screen.dart';
 import 'package:flutter_cal/screen/search/search_map.dart';
 import 'package:flutter_cal/screen/search/search_tts.dart';
@@ -8,6 +9,7 @@ enum RouteType {
   calendar(techName: 'calendar_yg_test'),
   tts(techName: 'TTS'),
   map(techName: 'MAP'),
+  riverpodTodo(techName: '리버팟 todo 예제'),
   setting(techName: 'Setting');
 
   final String techName;
@@ -27,6 +29,8 @@ enum RouteType {
         return () => const SearchMap();
       case RouteType.setting:
         return () => const SettingScreen();
+      case RouteType.riverpodTodo:
+        return () => const RiverpodTodoScreen();
     }
   }
 }
