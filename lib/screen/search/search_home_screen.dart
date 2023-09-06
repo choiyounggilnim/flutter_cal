@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cal/routes/routes_type.dart';
 import 'package:flutter_cal/screen/calendar/home_screen_cal.dart';
 import 'package:flutter_cal/screen/search/search_map.dart';
 import 'package:flutter_cal/screen/search/search_tts.dart';
@@ -15,57 +14,36 @@ class SearchHomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Wrap(
-            children: createMyWidgets(context),
+          child: const Wrap(
             spacing: 10,
+            children: [
+              RouteButton(title: 'calendar_yg_test', screenWidget: HomeScreenCal()),
+              RouteButton(title: 'TTS', screenWidget: SearchTTS()),
+              RouteButton(title: 'MAP', screenWidget: SearchMap()),
+            ],
           ),
         ),
       ),
     );
   }
+}
 
-  List<Widget> createMyWidgets(BuildContext context) {
-    print("createMyWidgets");
-    List<RouteType> routeList = createRoutList(context);
-    return createWidgets(routeList);
-  }
+typedef VoidWidgetFunction = Widget Function();
 
-  List<RouteType> createRoutList(BuildContext context) {
-    List<RouteType> routeList = [];
-    routeList = [
-      RouteType(
-        techName: "calendar_yg_test",
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => const HomeScreenCal(),
-          ));
-        },
-      ),
-      RouteType(
-        techName: "TTS",
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => const SearchTTS(),
-          ));
-        },
-      ),
-      RouteType(
-        techName: "MAP",
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => const SearchMap(),
-          ));
-        },
-      ),
-    ];
-    return routeList;
-  }
+class RouteButton extends StatelessWidget {
+  final String title;
+  final Widget screenWidget;
+  const RouteButton({super.key, required this.title, required this.screenWidget});
 
-  List<Widget> createWidgets(List<RouteType> routeList) {
-    List<Widget> widgets = [];
-    for (var value in routeList) {
-      widgets.add(ElevatedButton(onPressed: value.onPressed, child: Text(value.techName)));
-    }
-    return widgets;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => screenWidget,
+        ));
+      },
+      child: Text(title),
+    );
   }
 }
