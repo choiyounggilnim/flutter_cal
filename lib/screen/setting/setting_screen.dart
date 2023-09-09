@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cal/global_type/theme_type.dart';
-import 'package:flutter_cal/reusable_widget/app_toggle_buttons.dart';
+import 'package:flutter_cal/global/type/theme_type.dart';
+import 'package:flutter_cal/global/widget/app_toggle_buttons.dart';
 import 'package:flutter_cal/user_setting.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

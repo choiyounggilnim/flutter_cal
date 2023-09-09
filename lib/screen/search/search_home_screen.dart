@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cal/global_type/routes_type.dart';
+import 'package:flutter_cal/global/type/routes_type.dart';
 
 class SearchHomeScreen extends StatelessWidget {
   const SearchHomeScreen({super.key});
@@ -15,32 +15,16 @@ class SearchHomeScreen extends StatelessWidget {
           child: Wrap(
             spacing: 10,
             children: RouteType.values
-                .map((routeType) => RouteButton(title: routeType.techName, screenBuilder: routeType.createPage))
+                .map((RouteType routeType) => ElevatedButton(
+                      onPressed: () {
+                        routePushHelper.toNamed(context, routeType);
+                      },
+                      child: Text(routeType.techName),
+                    ))
                 .toList(),
           ),
         ),
       ),
-    );
-  }
-}
-
-typedef VoidWidgetFunction = Widget Function();
-
-// 정리가 된 것 같지만 파라미터는 어떻게??????
-class RouteButton extends StatelessWidget {
-  final String title;
-  final VoidWidgetFunction screenBuilder;
-  const RouteButton({super.key, required this.title, required this.screenBuilder});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => screenBuilder(),
-        ));
-      },
-      child: Text(title),
     );
   }
 }
